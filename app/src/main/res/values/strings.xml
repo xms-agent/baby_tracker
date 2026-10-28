@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bebu</string>
+    <string name="welcome_title">Welcome to Bebu</string>
+    <string name="welcome_message">Your personal baby tracker for feeding, diapers, sleep, milestones, and precious moments.</string>
+    <string name="get_started">Get Started</string>
+</resources>
