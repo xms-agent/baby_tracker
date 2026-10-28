@@ -40,14 +40,14 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     
     HomeScreenContent(
-        welcomeMessage = uiState.welcomeMessage,
+        showReadyMessage = uiState.showReadyMessage,
         onGetStartedClick = { viewModel.onGetStartedClick() }
     )
 }
 
 @Composable
 internal fun HomeScreenContent(
-    welcomeMessage: String,
+    showReadyMessage: Boolean,
     onGetStartedClick: () -> Unit
 ) {
     Column(
@@ -75,9 +75,9 @@ internal fun HomeScreenContent(
         
         Spacer(modifier = Modifier.height(32.dp))
         
-        if (welcomeMessage.isNotEmpty()) {
+        if (showReadyMessage) {
             Text(
-                text = welcomeMessage,
+                text = stringResource(R.string.ready_to_track),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 textAlign = TextAlign.Center
@@ -97,7 +97,7 @@ internal fun HomeScreenContent(
 private fun HomeScreenPreview() {
     BebuTheme {
         HomeScreenContent(
-            welcomeMessage = "",
+            showReadyMessage = false,
             onGetStartedClick = {}
         )
     }
@@ -108,7 +108,7 @@ private fun HomeScreenPreview() {
 private fun HomeScreenDarkPreview() {
     BebuTheme(darkTheme = true) {
         HomeScreenContent(
-            welcomeMessage = "Ready to track!",
+            showReadyMessage = true,
             onGetStartedClick = {}
         )
     }

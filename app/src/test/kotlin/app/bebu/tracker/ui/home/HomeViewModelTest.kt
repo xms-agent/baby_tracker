@@ -61,32 +61,29 @@ class HomeViewModelTest {
     }
     
     @Test
-    fun `initial state has empty welcome message`() = runTest {
+    fun `initial state has showReadyMessage false`() = runTest {
         // Given: ViewModel is created (in setup)
         advanceUntilIdle()
         
-        // Then: Initial state should have empty welcome message
+        // Then: Initial state should have showReadyMessage false
         val state = viewModel.uiState.value
-        assertTrue(state.welcomeMessage.isEmpty())
+        assertEquals(false, state.showReadyMessage)
     }
     
     @Test
-    fun `onGetStartedClick updates welcome message`() = runTest {
+    fun `onGetStartedClick sets showReadyMessage to true`() = runTest {
         // Given: ViewModel with initial state
         advanceUntilIdle()
         val initialState = viewModel.uiState.value
-        assertTrue(initialState.welcomeMessage.isEmpty())
+        assertEquals(false, initialState.showReadyMessage)
         
         // When: User clicks get started button
         viewModel.onGetStartedClick()
         advanceUntilIdle()
         
-        // Then: Welcome message should be updated
+        // Then: showReadyMessage should be set to true
         val updatedState = viewModel.uiState.value
-        assertEquals(
-            "Ready to track your baby's journey!",
-            updatedState.welcomeMessage
-        )
+        assertEquals(true, updatedState.showReadyMessage)
     }
     
     @Test

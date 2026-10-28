@@ -4,4 +4,5 @@
     <string name="welcome_title">Welcome to Bebu</string>
     <string name="welcome_message">Your personal baby tracker for feeding, diapers, sleep, milestones, and precious moments.</string>
     <string name="get_started">Get Started</string>
+    <string name="ready_to_track">Ready to track your baby\'s journey!</string>
 </resources>

@@ -5,11 +5,13 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import app.bebu.tracker.ui.theme.BebuTheme
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
 /**
@@ -29,59 +31,128 @@ class HomeScreenTest {
     val composeTestRule = createComposeRule()
     
     @Test
-    fun `home screen displays welcome title`() {
-        // Given: Home screen is rendered
+    @Config(qualifiers = "en")
+    fun `home screen displays English welcome title`() {
+        // Given: Home screen is rendered with English locale
+        val context = RuntimeEnvironment.getApplication()
+        
         composeTestRule.setContent {
             BebuTheme {
                 HomeScreenContent(
-                    welcomeMessage = "",
+                    showReadyMessage = false,
                     onGetStartedClick = {}
                 )
             }
         }
         
-        // Then: Welcome text should be visible
-        // Note: In a real test environment with resources, we'd check the actual string
-        // For now, this verifies the composable renders without crashing
-        composeTestRule.waitForIdle()
+        // Then: English welcome title should be displayed
+        composeTestRule
+            .onNodeWithText("Welcome to Bebu")
+            .assertIsDisplayed()
     }
     
     @Test
+    @Config(qualifiers = "ro")
+    fun `home screen displays Romanian welcome title`() {
+        // Given: Home screen is rendered with Romanian locale
+        val context = RuntimeEnvironment.getApplication()
+        
+        composeTestRule.setContent {
+            BebuTheme {
+                HomeScreenContent(
+                    showReadyMessage = false,
+                    onGetStartedClick = {}
+                )
+            }
+        }
+        
+        // Then: Romanian welcome title should be displayed
+        composeTestRule
+            .onNodeWithText("Bine ai venit la Bebu")
+            .assertIsDisplayed()
+    }
+    
+    @Test
+    @Config(qualifiers = "en")
     fun `clicking get started button triggers callback`() {
         // Given: Home screen with click handler
         var buttonClicked = false
         composeTestRule.setContent {
             BebuTheme {
                 HomeScreenContent(
-                    welcomeMessage = "",
+                    showReadyMessage = false,
                     onGetStartedClick = { buttonClicked = true }
                 )
             }
         }
         
-        // When: Button exists (search by content description would be better in real tests)
-        composeTestRule.waitForIdle()
+        // When: User clicks the "Get Started" button
+        composeTestRule
+            .onNodeWithText("Get Started")
+            .performClick()
         
-        // Then: Callback was invoked (simplified test due to resource access limitations)
-        // In a full test suite, we'd use proper test tags and string resources
+        // Then: Callback should have been invoked
+        assertEquals(true, buttonClicked)
     }
     
     @Test
-    fun `welcome message is displayed when present`() {
-        // Given: Home screen with welcome message
-        val testMessage = "Test welcome message"
+    @Config(qualifiers = "ro")
+    fun `clicking get started button in Romanian triggers callback`() {
+        // Given: Home screen with Romanian locale and click handler
+        var buttonClicked = false
         composeTestRule.setContent {
             BebuTheme {
                 HomeScreenContent(
-                    welcomeMessage = testMessage,
+                    showReadyMessage = false,
+                    onGetStartedClick = { buttonClicked = true }
+                )
+            }
+        }
+        
+        // When: User clicks the "Începe" button
+        composeTestRule
+            .onNodeWithText("Începe")
+            .performClick()
+        
+        // Then: Callback should have been invoked
+        assertEquals(true, buttonClicked)
+    }
+    
+    @Test
+    @Config(qualifiers = "en")
+    fun `ready message is displayed when showReadyMessage is true`() {
+        // Given: Home screen with showReadyMessage = true
+        composeTestRule.setContent {
+            BebuTheme {
+                HomeScreenContent(
+                    showReadyMessage = true,
                     onGetStartedClick = {}
                 )
             }
         }
         
-        // Then: Welcome message should be visible
+        // Then: Ready message should be visible
         composeTestRule
-            .onNodeWithText(testMessage)
+            .onNodeWithText("Ready to track your baby's journey!")
+            .assertIsDisplayed()
+    }
+    
+    @Test
+    @Config(qualifiers = "ro")
+    fun `ready message is displayed in Romanian when showReadyMessage is true`() {
+        // Given: Home screen with showReadyMessage = true and Romanian locale
+        composeTestRule.setContent {
+            BebuTheme {
+                HomeScreenContent(
+                    showReadyMessage = true,
+                    onGetStartedClick = {}
+                )
+            }
+        }
+        
+        // Then: Romanian ready message should be visible
+        composeTestRule
+            .onNodeWithText("Gata să urmărești călătoria bebelușului tău!")
             .assertIsDisplayed()
     }
     
@@ -91,7 +162,7 @@ class HomeScreenTest {
         composeTestRule.setContent {
             BebuTheme(darkTheme = true) {
                 HomeScreenContent(
-                    welcomeMessage = "Dark theme test",
+                    showReadyMessage = true,
                     onGetStartedClick = {}
                 )
             }
@@ -99,6 +170,6 @@ class HomeScreenTest {
         
         // Then: Screen should render without crashing
         composeTestRule.waitForIdle()
-        assertTrue(true) // If we reach here, dark theme renders successfully
+        assertTrue(true)
     }
 }

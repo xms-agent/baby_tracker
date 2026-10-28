@@ -15,7 +15,7 @@ import javax.inject.Inject
  * UI state for the home screen.
  */
 data class HomeUiState(
-    val welcomeMessage: String = ""
+    val showReadyMessage: Boolean = false
 )
 
 /**
@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor(
     fun onGetStartedClick() {
         _uiState.update { currentState ->
             currentState.copy(
-                welcomeMessage = "Ready to track your baby's journey!"
+                showReadyMessage = true
             )
         }
     }
