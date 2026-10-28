@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Bebu</string>
     <string name="welcome_title">Bine ai venit la Bebu</string>
-    <string name="welcome_message">Aplicația ta personală pentru urmărirea hranei, scutecelor, somnului, etapelor de dezvoltare și momente prețioase.</string>
+    <string name="welcome_message">Aplicația ta personală pentru urmărirea hranei, scutecelor, somnului, etapelor de dezvoltare și momentelor prețioase.</string>
     <string name="get_started">Începe</string>
     <string name="ready_to_track">Gata să urmărești călătoria bebelușului tău!</string>
 </resources>
